@@ -32,10 +32,7 @@
 </static-query>
 
 <script>
-  const x = 'y';
-
   export default {
-
 
   };
 </script>

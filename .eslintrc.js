@@ -1,54 +1,59 @@
 module.exports = {
+  root: true,
   extends: [
-    "airbnb-base",
-    "plugin:vue/recommended",
-    "plugin:gridsome/recommended",
+    'airbnb-base',
+    'plugin:vue/recommended',
+    'plugin:gridsome/recommended',
   ],
   plugins: [
-    "gridsome"
+    'gridsome',
   ],
-  "settings": {
-    "import/resolver": {
-      "alias": [
-        ['~', "./src"]
-      ]
-    }
+  parserOptions: {
+    parser: 'babel-eslint',
   },
-  "rules": {
-    "import/extensions": [
-      "error",
-      "ignorePackages",
+  settings: {
+    'import/resolver': {
+      alias: [
+        ['~', './src'],
+      ],
+    },
+  },
+  rules: {
+    'import/extensions': [
+      'error',
+      'ignorePackages',
       {
-        "js": "never",
-        "mjs": "never",
-        "vue": "never"
-      }
+        js: 'never',
+        mjs: 'never',
+        vue: 'never',
+      },
     ],
-    "no-console": "off",
-    "no-param-reassign": [
-      "error",
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-param-reassign': [
+      'error',
       {
-        "props": false
-      }
+        props: false,
+      },
     ],
-    "no-underscore-dangle": "off",
-    "prefer-destructuring": "off",
-    "vue/script-indent": [
-      "error",
+    'no-underscore-dangle': 'off',
+    'prefer-destructuring': 'off',
+    'vue/script-indent': [
+      'error',
       2,
       {
-        "baseIndent": 1
-      }
-    ]
+        baseIndent: 1,
+      },
+    ],
   },
-  "overrides": [
+  overrides: [
     {
-      "files": [
-        "*.vue"
+      files: [
+        '*.vue',
       ],
-      "rules": {
-        "indent": "off"
-      }
-    }
-  ]
+      rules: {
+        indent: 'off',
+      },
+    },
+  ],
 };
