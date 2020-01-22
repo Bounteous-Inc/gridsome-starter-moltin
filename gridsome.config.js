@@ -4,11 +4,19 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
+require('dotenv').config();
 const merge = require('webpack-merge');
 
 module.exports = {
   siteName: 'Gridsome',
-  plugins: [],
+  plugins: [
+    {
+      use: '@bounteous/gridsome-source-moltin',
+      options: {
+        clientId: process.env.MOLTIN_CLIENT_ID,
+      },
+    },
+  ],
   configureWebpack(config) {
     return merge(
       config,

@@ -9,9 +9,11 @@
   },
   "dependencies": {
     "@storefront-ui/vue": "^0.5.1",
+    "dotenv": "^8.2.0",
     "gridsome": "^0.7.0"
   },
   "devDependencies": {
+    "@bounteous/gridsome-source-moltin": "bitbucket:hs2studio/gridsome-source-moltin",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
