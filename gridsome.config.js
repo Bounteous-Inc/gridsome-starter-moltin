@@ -4,39 +4,10 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
-require('dotenv').config();
-const merge = require('webpack-merge');
-const { join } = require('path');
-
 module.exports = {
   siteName: 'Gridsome',
   plugins: [
-    {
-      use: '@bounteous/gridsome-source-moltin',
-      options: {
-        clientId: process.env.MOLTIN_CLIENT_ID,
-        downloadPath: join(__dirname, 'content', 'moltin', 'files'),
-      },
-    },
+    require('./config/moltin'),
   ],
-  configureWebpack(config) {
-    return merge(
-      config,
-      {
-        module: {
-          rules: [
-            {
-              enforce: 'pre',
-              test: /\.(js|vue)$/,
-              exclude: /node_modules/,
-              loader: 'eslint-loader',
-              options: {
-                fix: true,
-              },
-            },
-          ],
-        },
-      },
-    );
-  },
+  configureWebpack: require('./config/webpack'),
 };
