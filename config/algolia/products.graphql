@@ -1,0 +1,44 @@
+query {
+  allMoltinProduct {
+    edges {
+      node {
+        id
+        sku
+        slug
+        # path
+        name
+        description
+        commodity_type
+        created_at
+        updated_at
+        categories: belongsTo(filter: { typeName: { eq: MoltinCategory }} ) {
+          edges {
+            node {
+              ... on MoltinCategory {
+                name
+              }
+            }
+          }
+        }
+        brands: belongsTo(filter: { typeName: { eq: MoltinBrand }} ) {
+          edges {
+            node {
+              ... on MoltinBrand {
+                name
+              }
+            }
+          }
+        }
+        collections: belongsTo(filter: { typeName: { eq: MoltinCollection }} ) {
+          edges {
+            node {
+              ... on MoltinCollection {
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

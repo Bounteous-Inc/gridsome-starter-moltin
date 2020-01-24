@@ -8,6 +8,7 @@ module.exports = {
   siteName: 'Gridsome',
   plugins: [
     require('./config/moltin'),
+    require('./config/algolia'),
   ],
   configureWebpack: require('./config/webpack'),
 };
