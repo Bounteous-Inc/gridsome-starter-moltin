@@ -5,7 +5,9 @@
     "build": "gridsome build",
     "develop": "gridsome develop",
     "explore": "gridsome explore",
-    "lint": "eslint --ext .js,.vue ./"
+    "lint": "eslint --ext .js,.vue ./",
+    "config": "npx configure-env",
+    "postinstall": "npm run config"
   },
   "dependencies": {
     "@storefront-ui/vue": "^0.5.1",
