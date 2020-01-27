@@ -6,9 +6,14 @@
 
 module.exports = {
   siteName: 'Gridsome',
+  configureWebpack: require('./config/webpack'),
   plugins: [
     require('./config/moltin'),
     require('./config/algolia'),
   ],
-  configureWebpack: require('./config/webpack'),
+  templates: {
+    MoltinBrand: '/brand/:slug',
+    MoltinCategory: '/category/:slug',
+    MoltinProduct: '/product/:slug',
+  },
 };
