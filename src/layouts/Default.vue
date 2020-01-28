@@ -17,6 +17,24 @@
         >
           About
         </g-link>
+        <g-link
+          class="nav__link"
+          to="/categories"
+        >
+          Categories
+        </g-link>
+        <g-link
+          class="nav__link"
+          to="/brands"
+        >
+          Brands
+        </g-link>
+        <g-link
+          class="nav__link"
+          to="/collections"
+        >
+          Collections
+        </g-link>
       </nav>
     </header>
     <slot />
