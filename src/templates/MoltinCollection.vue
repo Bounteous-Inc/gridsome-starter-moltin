@@ -1,12 +1,12 @@
 <template>
   <Layout>
-    <h1>{{ $page.category.name }}</h1>
+    <h1>{{ $page.collection.name }}</h1>
 
-    <p>{{ $page.category.description }}</p>
+    <p>{{ $page.collection.description }}</p>
 
     <ul>
       <li
-        v-for="product in $page.category.products"
+        v-for="product in $page.collection.products"
         :key="product.id"
       >
         <a :href="product.path">{{ product.name }}</a>
@@ -17,7 +17,7 @@
 
 <page-query>
   query($id: ID!) {
-    category: moltinCategory(id: $id) {
+    collection: moltinCollection(id: $id) {
       id
       type
       name
@@ -39,7 +39,7 @@
 <script>
   export default {
     metaInfo: {
-      title: 'Category',
+      title: 'Collection',
     },
   };
 </script>

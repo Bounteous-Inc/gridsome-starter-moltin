@@ -1,14 +1,16 @@
 <template>
   <Layout>
-    <h1>{{ $page.moltinProduct.name }}</h1>
+    <h1>{{ $page.product.name }}</h1>
 
-    <p>{{ $page.moltinProduct.description }}</p>
+    <p>{{ $page.product.description }}</p>
+
+    <g-image :src="$page.product.main_image.image" />
   </Layout>
 </template>
 
 <page-query>
   query($id: ID!) {
-    moltinProduct(id: $id) {
+    product: moltinProduct(id: $id) {
       id
       sku
       slug
@@ -19,6 +21,14 @@
       commodity_type
       created_at
       updated_at
+      main_image {
+        id
+        type
+        image
+        file_name
+        mime_type
+        created_at
+      }
     }
   }
 </page-query>

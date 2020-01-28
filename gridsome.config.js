@@ -14,6 +14,7 @@ module.exports = {
   templates: {
     MoltinBrand: '/brand/:slug',
     MoltinCategory: '/category/:slug',
+    MoltinCollection: '/collection/:slug',
     MoltinProduct: '/product/:slug',
   },
 };

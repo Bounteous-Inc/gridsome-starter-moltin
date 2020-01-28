@@ -29,6 +29,12 @@
         >
           Brands
         </g-link>
+        <g-link
+          class="nav__link"
+          to="/collections"
+        >
+          Collections
+        </g-link>
       </nav>
     </header>
     <slot />
