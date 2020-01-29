@@ -1,6 +1,29 @@
-/* Here you can override global SCSS variables */
+// Font family
+$body-font-family-primary: 'Montserrat', sans-serif !default;
+$body-font-family-secondary: 'Montserrat', sans-serif !default;
 
-// global override excluding scoped components
-// $button-padding: 5px !default;
-// global override including scoped componentss
-// $button-padding: 50px;
+// Font weight
+$body-font-weight-primary: 500 !default;
+$body-font-weight-secondary: 800 !default;
+
+// Heading font weight
+$h1-font-weight-desktop: 800 !default;
+$h2-font-weight-desktop: 800 !default;
+$h3-font-weight-desktop: 800 !default;
+$h4-font-weight-desktop: 800 !default;
+
+$h1-font-weight-mobile: 800 !default;
+$h2-font-weight-mobile: 800 !default;
+$h3-font-weight-mobile: 800 !default;
+$h4-font-weight-mobile: 800 !default;
+
+// Theme colors
+$c-primary: rgb(208, 46, 97);
+$c-secondary: rgb(215, 111, 42);
+
+$c-text-primary: #222;
+// $c-text-secondary: $c-gray-secondary !default;
+// $c-text-on-light: $c-black !default;
+// $c-text-on-dark: $c-white !default;
+$c-text-link: rgb(208, 46, 97);
+// $c-text-link-hover: $c-dark-primary !default;

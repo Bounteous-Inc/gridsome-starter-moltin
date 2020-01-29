@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <h1>Brands</h1>
+    <h2>Brands</h2>
     <ul>
       <li
         v-for="{ node } in $page.brands.edges"

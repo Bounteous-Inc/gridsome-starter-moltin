@@ -5,7 +5,7 @@
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
 module.exports = {
-  siteName: 'Gridsome',
+  siteName: 'Bright',
   configureWebpack: require('./config/webpack'),
   plugins: [
     require('./config/moltin'),

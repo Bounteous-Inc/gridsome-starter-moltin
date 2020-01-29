@@ -1,177 +1,175 @@
 <template>
   <Layout>
-    <div id="home">
-      <SfHero class="section">
-        <SfHeroItem
-          v-for="(hero, i) in heroes"
-          :key="i"
-          :title="hero.title"
-          :subtitle="hero.subtitle"
-          :button-text="hero.buttonText"
-          :background="hero.background"
-          :image="hero.image"
-          :class="hero.className"
-        />
-      </SfHero>
-      <SfBannerGrid
-        :banner-grid="1"
-        class="banners section"
-      >
-        <template #bannerA>
-          <a href="#">
-            <SfBanner
-              subtitle="Dresses"
-              title="COCKTAIL PARTY"
-              description="Find stunning women's cocktail dresses and party dresses."
-              button-text="SHOP NOW"
-              :image="{
-                mobile: '/assets/storybook/Home/bannerB.jpg',
-                desktop: '/assets/storybook/Home/bannerF.jpg'
-              }"
-              class="sf-banner--slim banner-custom"
-            />
-          </a>
-        </template>
-        <template #bannerB>
-          <a href="#">
-            <SfBanner
-              subtitle="Dresses"
-              title="LINEN DRESSES"
-              description="Find stunning women's cocktail dresses and party dresses."
-              button-text="SHOP NOW"
-              image="/assets/storybook/Home/bannerE.jpg"
-              class="sf-banner--slim banner-central"
-            />
-          </a>
-        </template>
-        <template #bannerC>
-          <a href="#">
-            <SfBanner
-              subtitle="T-Shirts"
-              title="THE OFFICE LIFE"
-              image="/assets/storybook/Home/bannerC.jpg"
-              class="sf-banner--slim"
-            />
-          </a>
-        </template>
-        <template #bannerD>
-          <a href="#">
-            <SfBanner
-              subtitle="Summer shoes"
-              title="ECO SANDALS"
-              image="/assets/storybook/Home/bannerG.jpg"
-              class="sf-banner--slim"
-            />
-          </a>
-        </template>
-      </SfBannerGrid>
-      <SfCallToAction
-        title="Subscribe to Newsletters"
-        button-text="Subscribe"
-        description="Be aware of upcoming sales and events. Receive gifts and special offers!"
-        class="call-to-action-newsletter"
-        image="assets/storybook/Home/newsletter.jpg"
+    <SfHero class="section">
+      <SfHeroItem
+        v-for="(hero, i) in heroes"
+        :key="i"
+        :title="hero.title"
+        :subtitle="hero.subtitle"
+        :button-text="hero.buttonText"
+        :background="hero.background"
+        :image="hero.image"
+        :class="hero.className"
       />
-      <SfSection
-        title-heading="Best Sellers"
-        class="section"
-      >
-        <SfCarousel class="product-carousel">
-          <SfCarouselItem
-            v-for="(product, i) in products"
-            :key="i"
-          >
-            <SfProductCard
-              :title="product.title"
-              :image="product.image"
-              :regular-price="product.price.regular"
-              :max-rating="product.rating.max"
-              :score-rating="product.rating.score"
-              :is-on-wishlist="product.isOnWishlist"
-              class="product-card"
-              @click:wishlist="toggleWishlist(i)"
-            />
-          </SfCarouselItem>
-        </SfCarousel>
-      </SfSection>
-      <SfSection
-        title-heading="Share Your Look"
-        subtitle-heading="#YOURLOOK"
-        class="section"
-      >
-        <div class="images-grid">
-          <div class="images-grid__row">
-            <div class="images-grid__col">
-              <SfImage
-                src="assets/storybook/Home/imageA.jpg"
-                :width="486"
-                :height="486"
-              >
-                katherina_trn
-              </SfImage>
-            </div>
-            <div class="images-grid__col">
-              <SfImage
-                src="assets/storybook/Home/imageB.jpg"
-                :width="486"
-                :height="486"
-              >
-                katherina_trn
-              </SfImage>
-            </div>
+    </SfHero>
+    <SfBannerGrid
+      :banner-grid="1"
+      class="banners section"
+    >
+      <template #bannerA>
+        <a href="#">
+          <SfBanner
+            subtitle="Dresses"
+            title="COCKTAIL PARTY"
+            description="Find stunning women's cocktail dresses and party dresses."
+            button-text="SHOP NOW"
+            :image="{
+              mobile: '/assets/storybook/Home/bannerB.jpg',
+              desktop: '/assets/storybook/Home/bannerF.jpg'
+            }"
+            class="sf-banner--slim banner-custom"
+          />
+        </a>
+      </template>
+      <template #bannerB>
+        <a href="#">
+          <SfBanner
+            subtitle="Dresses"
+            title="LINEN DRESSES"
+            description="Find stunning women's cocktail dresses and party dresses."
+            button-text="SHOP NOW"
+            image="/assets/storybook/Home/bannerE.jpg"
+            class="sf-banner--slim banner-central"
+          />
+        </a>
+      </template>
+      <template #bannerC>
+        <a href="#">
+          <SfBanner
+            subtitle="T-Shirts"
+            title="THE OFFICE LIFE"
+            image="/assets/storybook/Home/bannerC.jpg"
+            class="sf-banner--slim"
+          />
+        </a>
+      </template>
+      <template #bannerD>
+        <a href="#">
+          <SfBanner
+            subtitle="Summer shoes"
+            title="ECO SANDALS"
+            image="/assets/storybook/Home/bannerG.jpg"
+            class="sf-banner--slim"
+          />
+        </a>
+      </template>
+    </SfBannerGrid>
+    <SfCallToAction
+      title="Subscribe to Newsletters"
+      button-text="Subscribe"
+      description="Be aware of upcoming sales and events. Receive gifts and special offers!"
+      class="call-to-action-newsletter"
+      image="assets/storybook/Home/newsletter.jpg"
+    />
+    <SfSection
+      title-heading="Best Sellers"
+      class="section"
+    >
+      <SfCarousel class="product-carousel">
+        <SfCarouselItem
+          v-for="(product, i) in products"
+          :key="i"
+        >
+          <SfProductCard
+            :title="product.title"
+            :image="product.image"
+            :regular-price="product.price.regular"
+            :max-rating="product.rating.max"
+            :score-rating="product.rating.score"
+            :is-on-wishlist="product.isOnWishlist"
+            class="product-card"
+            @click:wishlist="toggleWishlist(i)"
+          />
+        </SfCarouselItem>
+      </SfCarousel>
+    </SfSection>
+    <SfSection
+      title-heading="Share Your Look"
+      subtitle-heading="#YOURLOOK"
+      class="section"
+    >
+      <div class="images-grid">
+        <div class="images-grid__row">
+          <div class="images-grid__col">
+            <SfImage
+              src="assets/storybook/Home/imageA.jpg"
+              :width="486"
+              :height="486"
+            >
+              katherina_trn
+            </SfImage>
           </div>
-          <div class="images-grid__row">
-            <div class="images-grid__col">
-              <SfImage
-                src="assets/storybook/Home/imageC.jpg"
-                :width="486"
-                :height="486"
-              >
-                katherina_trn
-              </SfImage>
-            </div>
-            <div class="images-grid__col">
-              <SfImage
-                src="assets/storybook/Home/imageD.jpg"
-                :width="486"
-                :height="486"
-              >
-                katherina_trn
-              </SfImage>
-            </div>
+          <div class="images-grid__col">
+            <SfImage
+              src="assets/storybook/Home/imageB.jpg"
+              :width="486"
+              :height="486"
+            >
+              katherina_trn
+            </SfImage>
           </div>
         </div>
-      </SfSection>
-      <SfBanner
-        image="/assets/storybook/Home/bannerD.png"
-        class="banner-application desktop-only"
-      >
-        <template #subtitle>
-          <div class="banner-application__subtitle">
-            Fashion to Take Away
-          </div>
-        </template>
-        <template #title>
-          <h1 class="banner-application__title">
-            Download our application to your&nbsp;mobile
-          </h1>
-        </template>
-        <template #call-to-action>
-          <div>
-            <img
-              class="banner-application__download"
-              src="assets/storybook/Home/google.png"
-              alt=""
+        <div class="images-grid__row">
+          <div class="images-grid__col">
+            <SfImage
+              src="assets/storybook/Home/imageC.jpg"
+              :width="486"
+              :height="486"
             >
-            <img
-              class="banner-application__download"
-              src="assets/storybook/Home/apple.png"
-              alt=""
-            >
+              katherina_trn
+            </SfImage>
           </div>
-        </template>
-      </SfBanner>
-    </div>
+          <div class="images-grid__col">
+            <SfImage
+              src="assets/storybook/Home/imageD.jpg"
+              :width="486"
+              :height="486"
+            >
+              katherina_trn
+            </SfImage>
+          </div>
+        </div>
+      </div>
+    </SfSection>
+    <SfBanner
+      image="/assets/storybook/Home/bannerD.png"
+      class="banner-application desktop-only"
+    >
+      <template #subtitle>
+        <div class="banner-application__subtitle">
+          Fashion to Take Away
+        </div>
+      </template>
+      <template #title>
+        <h1 class="banner-application__title">
+          Download our application to your&nbsp;mobile
+        </h1>
+      </template>
+      <template #call-to-action>
+        <div>
+          <img
+            class="banner-application__download"
+            src="assets/storybook/Home/google.png"
+            alt=""
+          >
+          <img
+            class="banner-application__download"
+            src="assets/storybook/Home/apple.png"
+            alt=""
+          >
+        </div>
+      </template>
+    </SfBanner>
   </layout>
 </template>
 <script>
@@ -299,13 +297,6 @@
     @content;
   }
 }
-#home {
-  box-sizing: border-box;
-  @include for-desktop {
-    max-width: 1240px;
-    margin: auto;
-  }
-}
 .call-to-action-newsletter {
   margin: $spacer-big 0;
   box-sizing: border-box;
@@ -392,14 +383,6 @@
       padding: 20px;
       max-width: calc(100% - 216px);
     }
-  }
-}
-.section {
-  padding-left: $spacer-big;
-  padding-right: $spacer-big;
-  @include for-desktop {
-    padding-left: 0;
-    padding-right: 0;
   }
 }
 </style>
