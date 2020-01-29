@@ -102,23 +102,13 @@
     },
     computed: {
       navigation() {
-        return [
-          {
-            name: 'Categories',
-            path: '/categories',
-            children: this.$static.categories.edges.map((n) => n.node),
-          },
-          {
-            name: 'Collections',
-            path: '/collections',
-            children: this.$static.collections.edges.map((n) => n.node),
-          },
-          // {
-          //   name: 'Brands',
-          //   path: '/brands',
-          //   children: this.$static.brands.edges.map((n) => n.node),
-          // },
-        ];
+        return ['categories', 'collections', 'brands']
+          .filter((hierarchy) => this.$static[hierarchy].edges.length > (hierarchy === 'brands' ? 1 : 0))
+          .map((hierarchy) => ({
+            name: `${hierarchy.charAt(0).toUpperCase()}${hierarchy.slice(1)}`,
+            path: `/${hierarchy}`,
+            children: this.$static[hierarchy].edges.map((n) => n.node),
+          }));
       },
     },
     watch: {
