@@ -1,44 +1,8 @@
 <template>
-  <div class="layout">
-    <header class="header">
-      <strong>
-        <g-link to="/">{{ $static.metadata.siteName }}</g-link>
-      </strong>
-      <nav class="nav">
-        <g-link
-          class="nav__link"
-          to="/"
-        >
-          Home
-        </g-link>
-        <g-link
-          class="nav__link"
-          to="/about/"
-        >
-          About
-        </g-link>
-        <g-link
-          class="nav__link"
-          to="/categories"
-        >
-          Categories
-        </g-link>
-        <g-link
-          class="nav__link"
-          to="/brands"
-        >
-          Brands
-        </g-link>
-        <g-link
-          class="nav__link"
-          to="/collections"
-        >
-          Collections
-        </g-link>
-      </nav>
-    </header>
+  <main>
+    <Header id="nav-header" />
     <slot />
-  </div>
+  </main>
 </template>
 
 <static-query>
@@ -50,43 +14,46 @@
 </static-query>
 
 <script>
-  export default {
+  import Header from '~/components/Header.vue';
 
+  export default {
+    components: {
+      Header,
+    },
   };
 </script>
 
-<style>
+
+<style lang="scss">
+  @import "~@storefront-ui/vue/styles";
+  @mixin for-desktop {
+    @media screen and (min-width: $desktop-min) {
+      @content;
+    }
+  }
+  main {
+    box-sizing: border-box;
+    @include for-desktop {
+      max-width: 1240px;
+      margin: auto;
+    }
+  }
+  .section {
+    padding-left: $spacer-big;
+    padding-right: $spacer-big;
+    @include for-desktop {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+  #nav-header {
+    z-index: 10;
+  }
   body {
-    font-family:
-      -apple-system,
-      system-ui,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      Roboto,
-      "Helvetica Neue",
-      Arial,
-      sans-serif;
-    margin:0;
-    padding:0;
-    line-height: 1.5;
+    color: $c-text-primary;
   }
 
-  .layout {
-    max-width: 760px;
-    margin: 0 auto;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    height: 80px;
-  }
-
-  .nav__link {
-    margin-left: 20px;
+  a {
+    color: $c-text-link;
   }
 </style>

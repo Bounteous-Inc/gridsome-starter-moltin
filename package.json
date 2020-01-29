@@ -12,6 +12,7 @@
     "@storefront-ui/vue": "^0.5.1",
     "dotenv": "^8.2.0",
     "gridsome": "^0.7.0",
+    "typeface-montserrat": "0.0.75",
     "yarn": "^1.21.1"
   },
   "devDependencies": {
