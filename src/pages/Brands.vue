@@ -1,14 +1,30 @@
 <template>
   <Layout>
-    <h2>Brands</h2>
-    <ul>
-      <li
-        v-for="{ node } in $page.brands.edges"
-        :key="node.id"
-      >
-        <a :href="node.path">{{ node.name }}</a>
-      </li>
-    </ul>
+    <SfSection
+      v-for="brand in denode($page.brands)"
+      :key="brand.id"
+      :title-heading="brand.name"
+      class="section"
+    >
+      <SfCarousel class="product-carousel">
+        <SfCarouselItem
+          v-for="product in brand.products"
+          :key="product.id"
+        >
+          <SfProductCard
+            :title="product.name"
+            :regular-price="formatPrice(product.price[0].amount)"
+            :link="product.path"
+            link-type="g-link"
+            class="product-card"
+          >
+            <template #image>
+              <g-image :src="product.main_image.image" />
+            </template>
+          </SfProductCard>
+        </SfCarouselItem>
+      </SfCarousel>
+    </SfSection>
   </Layout>
 </template>
 
@@ -20,6 +36,22 @@
           id
           name
           path
+          products {
+            id
+            name
+            path
+            price {
+              amount
+            }
+            main_image {
+              id
+              type
+              image(width: 216, height: 326, fit: contain, background: "white")
+              file_name
+              mime_type
+              created_at
+            }
+          }
         }
       }
     }
@@ -27,9 +59,28 @@
 </page-query>
 
 <script>
+  import {
+    SfCarousel,
+    SfProductCard,
+    SfSection,
+  } from '@storefront-ui/vue';
+
+  import denode from '~/lib/denode';
+  import formatPrice from '~/lib/format-price';
+
   export default {
+    name: 'Brands',
     metaInfo: {
       title: 'Brands',
+    },
+    components: {
+      SfCarousel,
+      SfProductCard,
+      SfSection,
+    },
+    methods: {
+      denode,
+      formatPrice,
     },
   };
 </script>

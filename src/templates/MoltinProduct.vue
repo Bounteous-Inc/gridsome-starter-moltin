@@ -40,9 +40,6 @@
             </p>
             <div class="product-details__section">
               <SfAddToCart
-                v-model="qty"
-                :stock="stock"
-                :can-add-to-cart="stock > 0"
                 class="product-details__add-to-cart"
               />
             </div>
@@ -150,6 +147,9 @@
                 id
                 name
                 path
+                price {
+                  amount
+                }
                 main_image {
                   id
                   type
@@ -162,9 +162,6 @@
                   file_name
                   mime_type
                   created_at
-                }
-                price {
-                  amount
                 }
               }
             }
@@ -228,6 +225,9 @@
     SfSticky,
   } from '@storefront-ui/vue';
 
+  import denode from '~/lib/denode';
+  import formatPrice from '~/lib/format-price';
+
   export default {
     name: 'Product',
     components: {
@@ -263,12 +263,8 @@
       },
     },
     methods: {
-      formatPrice(value) {
-        return new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD' }).format(value / 100);
-      },
-      denode(collection) {
-        return collection.edges.map((n) => n.node);
-      },
+      denode,
+      formatPrice,
       others(n) {
         return n.id !== this.$page.product.id;
       },
