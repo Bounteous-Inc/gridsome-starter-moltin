@@ -26,7 +26,6 @@
               <span
                 class="moltin-buy-button sf-add-to-cart__button sf-button sf-shopkit-button"
                 :data-moltin-product-id="product.id"
-                data-moltin-open-cart="true"
                 data-moltin-text="Add to Cart"
                 @click.prevent
               />
