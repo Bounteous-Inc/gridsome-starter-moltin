@@ -1,54 +1,116 @@
 <template>
   <Layout>
-    <h1>{{ $page.product.name }}</h1>
-
-    <div class="product-wrapper">
-      <div class="product-image">
-        <g-image :src="$page.product.main_image.image" />
-      </div>
-      <div class="product-details">
-        <p><span>Price:</span> {{ formatPrice }}</p>
-
-        <p><span>SKU: </span> {{ $page.product.sku }}</p>
-
-        <p><span>Description</span> {{ $page.product.description }}</p>
-
-        <p><span>Type:</span> {{ $page.product.commodity_type }}</p>
-
-        <SfAddToCart
-          v-model="qty"
-          :stock="stock"
-          :can-add-to-cart="stock > 0"
-          class="product-details__add-to-cart"
-        />
-        <SfProperty
-          v-for="(property, i) in getProperties"
-          :key="i"
-          :name="property.property"
-          :value="property.value"
-          class="product-property"
-        />
-      </div>
-    </div>
-    <SfSection
-      title-heading="You might also like"
-      class="section"
-    >
-      <SfCarousel class="product-carousel">
-        <SfCarouselItem
-          v-for="(product, i) in getRelated"
-          :key="i"
-        >
-          <SfProductCard
-            :title="product.name"
-            :regular-price="product.price[0].amount"
-            :image="product.main_image.image.src"
-            class="product-card"
-            @click:wishlist="toggleWishlist(i)"
+    <div id="product">
+      <SfBreadcrumbs
+        class="breadcrumbs desktop-only"
+        :breadcrumbs="breadcrumbs"
+      />
+      <div class="product">
+        <div class="product__gallery">
+          <g-image
+            :src="$page.product.main_image.image_mobile"
+            class=" mobile-only"
+            width="390"
           />
-        </SfCarouselItem>
-      </SfCarousel>
-    </SfSection>
+          <g-image
+            :src="$page.product.main_image.image_desktop"
+            class="desktop-only"
+            width="590"
+          />
+        </div>
+        <div class="product__description">
+          <SfSticky class="product-details">
+            <div class="product-details__mobile-top">
+              <div>
+                <SfHeading
+                  :title="$page.product.name"
+                  :level="2"
+                  class="sf-heading--no-underline sf-heading--left product-details__heading"
+                />
+                <div class="product-details__sub">
+                  <SfPrice
+                    :regular="formatPrice($page.product.price[0].amount)"
+                    class="sf-price--big product-details__sub-price"
+                  />
+                </div>
+              </div>
+            </div>
+            <p class="product-details__description">
+              {{ $page.product.description }}
+            </p>
+            <div class="product-details__section">
+              <SfAddToCart
+                v-model="qty"
+                :stock="stock"
+                :can-add-to-cart="stock > 0"
+                class="product-details__add-to-cart"
+              />
+            </div>
+            <div class="product-details__description">
+              <SfProperty
+                name="SKU"
+                :value="$page.product.sku"
+                class="product-property"
+              />
+              <SfProperty
+                name="Category"
+                :value="$page.product.categories.edges[0].node.name"
+                class="product-property"
+              />
+            </div>
+          </SfSticky>
+        </div>
+      </div>
+      <SfSection
+        :key="$page.product.id"
+        :title-heading="`More ${$page.product.categories.edges[0].node.name} Products`"
+        class="section"
+      >
+        <SfCarousel class="product-carousel">
+          <SfCarouselItem
+            v-for="product in related.filter(others)"
+            :key="product.id"
+          >
+            <SfProductCard
+              :title="product.name"
+              :regular-price="formatPrice(product.price[0].amount)"
+              :link="product.path"
+              link-type="g-link"
+              class="product-card"
+            >
+              <template #image>
+                <g-image :src="product.main_image.image" />
+              </template>
+            </SfProductCard>
+          </SfCarouselItem>
+        </SfCarousel>
+      </SfSection>
+      <SfSection
+        v-for="collection in denode($page.product.collections).filter(others)"
+        :key="collection.id"
+        :title-heading="`Also in ${collection.name}`"
+        class="section"
+      >
+        <SfCarousel class="product-carousel">
+          <SfCarouselItem
+            v-for="product in collection.products"
+            :key="product.id"
+          >
+            <SfProductCard
+              :title="product.name"
+              :regular-price="formatPrice(product.price[0].amount)"
+              :link="product.path"
+              link-type="g-link"
+              class="product-card"
+            >
+              <template #image>
+                <g-image :src="product.main_image.image" />
+              </template>
+            </SfProductCard>
+          </SfCarouselItem>
+        </SfCarousel>
+      </SfSection>
+    </div>
   </Layout>
 </template>
 
@@ -68,7 +130,8 @@
       main_image {
         id
         type
-        image
+        image_mobile: image(width: 390, quality: 90)
+        image_desktop: image(width: 590, quality: 90)
         file_name
         mime_type
         created_at
@@ -80,13 +143,22 @@
         edges {
           node {
             ... on MoltinCategory {
+              id
               name
+              path
               products {
+                id
                 name
+                path
                 main_image {
                   id
                   type
-                  image
+                  image(
+                    width: 216
+                    height: 326
+                    fit: contain
+                    background: "white"
+                  )
                   file_name
                   mime_type
                   created_at
@@ -112,7 +184,29 @@
         edges {
           node {
             ... on MoltinCollection {
+              id
               name
+              products {
+                id
+                name
+                path
+                main_image {
+                  id
+                  type
+                  image(
+                    width: 216
+                    height: 326
+                    fit: contain
+                    background: "white"
+                  )
+                  file_name
+                  mime_type
+                  created_at
+                }
+                price {
+                  amount
+                }
+              }
             }
           }
         }
@@ -123,209 +217,330 @@
 
 <script>
   import {
-    // SfAlert,
-    SfProperty,
-    // SfHeading,
-    // SfPrice,
-    // SfRating,
-    // SfSelect,
     SfAddToCart,
-    // SfGallery,
-    SfProductCard,
+    SfBreadcrumbs,
     SfCarousel,
+    SfHeading,
+    SfPrice,
+    SfProductCard,
+    SfProperty,
     SfSection,
-    // SfImage,
-    // SfBreadcrumbs,
+    SfSticky,
   } from '@storefront-ui/vue';
 
   export default {
     name: 'Product',
     components: {
-      // SfAlert,
-      SfProperty,
-      // SfHeading,
-      // SfPrice,
-      // SfRating,
-      // SfSelect,
       SfAddToCart,
-      // SfGallery,
-      SfProductCard,
+      SfBreadcrumbs,
       SfCarousel,
+      SfHeading,
+      SfPrice,
+      SfProductCard,
+      SfProperty,
       SfSection,
-      // SfImage,
-      // SfBreadcrumbs,
+      SfSticky,
     },
-    data() {
-      return {
-        qty: '1',
-        stock: 5,
-        size: '',
-        sizes: [
-          { label: 'XXS', value: 'xxs' },
-          { label: 'XS', value: 'xs' },
-          { label: 'S', value: 's' },
-          { label: 'M', value: 'm' },
-          { label: 'L', value: 'l' },
-          { label: 'XL', value: 'xl' },
-          { label: 'XXL', value: 'xxl' },
-        ],
-        color: '',
-        colors: [
-          { label: 'Red', value: 'red', color: '#990611' },
-          { label: 'Black', value: 'black', color: '#000000' },
-          { label: 'Yellow', value: 'yellow', color: '#DCA742' },
-          { label: 'Blue', value: 'blue', color: '#004F97' },
-          { label: 'Navy', value: 'navy', color: '#656466' },
-          { label: 'White', value: 'white', color: '#FFFFFF' },
-        ],
-        properties: [
-          {
-            name: 'Product Code',
-            value: '578902-00',
-          },
-          {
-            name: 'Category',
-            value: 'Pants',
-          },
-          {
-            name: 'Material',
-            value: 'Cotton',
-          },
-          {
-            name: 'Country',
-            value: 'Germany',
-          },
-        ],
-        products: [
-          {
-            title: 'Cream Beach Bag',
-            image: 'assets/storybook/Home/productA.jpg',
-            price: { regular: '50.00 $' },
-            rating: { max: 5, score: 4 },
-            isOnWishlist: false,
-          },
-          {
-            title: 'Cream Beach Bag',
-            image: 'assets/storybook/Home/productB.jpg',
-            price: { regular: '50.00 $' },
-            rating: { max: 5, score: 4 },
-            isOnWishlist: false,
-          },
-          {
-            title: 'Cream Beach Bag',
-            image: 'assets/storybook/Home/productC.jpg',
-            price: { regular: '50.00 $' },
-            rating: { max: 5, score: 4 },
-            isOnWishlist: false,
-          },
-          {
-            title: 'Cream Beach Bag',
-            image: 'assets/storybook/Home/productA.jpg',
-            price: { regular: '50.00 $' },
-            rating: { max: 5, score: 4 },
-            isOnWishlist: false,
-          },
-          {
-            title: 'Cream Beach Bag',
-            image: 'assets/storybook/Home/productB.jpg',
-            price: { regular: '50.00 $' },
-            rating: { max: 5, score: 4 },
-            isOnWishlist: false,
-          },
-          {
-            title: 'Cream Beach Bag',
-            image: 'assets/storybook/Home/productC.jpg',
-            price: { regular: '50.00 $' },
-            rating: { max: 5, score: 4 },
-            isOnWishlist: false,
-          },
-          {
-            title: 'Cream Beach Bag',
-            image: 'assets/storybook/Home/productA.jpg',
-            price: { regular: '50.00 $' },
-            rating: { max: 5, score: 4 },
-            isOnWishlist: false,
-          },
-          {
-            title: 'Cream Beach Bag',
-            image: 'assets/storybook/Home/productB.jpg',
-            price: { regular: '50.00 $' },
-            rating: { max: 5, score: 4 },
-            isOnWishlist: false,
-          },
-        ],
-        reviews: [
-          {
-            author: 'Jane D.Smith',
-            date: 'April 2019',
-            message:
-              'I was looking for a bright light for the kitchen.',
-            rating: 4,
-          },
-          {
-            author: 'Mari',
-            date: 'Jan 2018',
-            message:
-              'Excellent light output from this led fitting. Relatively easy to fix to the ceiling.',
-            rating: 5,
-          },
-        ],
-        detailsIsActive: false,
-        breadcrumbs: [
+    computed: {
+      related() {
+        return this.$page.product.categories.edges.map((n) => n.node.products)[0];
+      },
+      breadcrumbs() {
+        return [
           {
             text: 'Home',
             route: {
-              link: '#',
+              link: '/',
             },
           },
           {
-            text: 'Category',
+            text: this.$page.product.categories.edges[0].node.name,
             route: {
-              link: '#',
+              link: this.$page.product.categories.edges[0].node.path,
             },
           },
-          {
-            text: 'Pants',
-            route: {
-              link: '#',
-            },
-          },
-        ],
-      };
-    },
-    computed: {
-      formatPrice() {
-        return new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD' }).format(this.$page.product.price[0].amount);
-      },
-      getProperties() {
-        const properties = [];
-        const sku = { property: 'SKU', value: this.$page.product.sku };
-        const category = { property: 'Category', value: this.$page.product.categories.edges[0].node.name };
-
-        properties.push(sku, category);
-
-        return properties;
-      },
-      getRelated() {
-        return this.$page.product.categories.edges.map((n) => n.node.products)[0];
+        ];
       },
     },
     methods: {
-      toggleWishlist(index) {
-        this.products[index].isOnWishlist = !this.products[index].isOnWishlist;
+      formatPrice(value) {
+        return new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD' }).format(value / 100);
+      },
+      denode(collection) {
+        return collection.edges.map((n) => n.node);
+      },
+      others(n) {
+        return n.id !== this.$page.product.id;
       },
     },
   };
 </script>
 
-<style>
-  .product-wrapper {
-    display: flex;
+<style lang="scss" scoped>
+  @import "~@storefront-ui/vue/styles";
+  @mixin for-desktop {
+    @media screen and (min-width: $desktop-min) {
+      @content;
+    }
   }
-  .product-image {
-    max-width: 800px;
+  #product {
+    box-sizing: border-box;
+    @include for-desktop {
+      max-width: 1240px;
+      margin: auto;
+    }
   }
-  .product-details  {
-    max-width: 400px;
+  .banner-application {
+    min-height: 420px;
+    max-width: 1040px;
+    margin: auto;
+    padding-right: calc(25% + 5rem);
+    padding-left: 2.5rem;
+    line-height: 1.6;
+    &__title {
+      margin: $spacer-big 0 0 0;
+      font-size: $h1-font-size-desktop;
+      font-weight: $h1-font-weight-desktop;
+    }
+    &__subtitle {
+      color: #a3a5ad;
+      font-family: $body-font-family-primary;
+      font-size: $font-size-extra-big-desktop;
+      font-weight: $body-font-weight-primary;
+    }
+    &__download {
+      max-height: 47px;
+      margin-top: $spacer-extra-big;
+      & + & {
+        margin-left: $spacer-big;
+      }
+    }
+  }
+  .breadcrumbs {
+    padding: $spacer-big $spacer-extra-big $spacer-extra-big;
+  }
+  .gallery-mobile {
+    $height-other: 240px;
+    $height-iOS: 265px;
+    height: calc(100vh - #{$height-other});
+    @supports (-webkit-overflow-scrolling: touch) {
+      height: calc(100vh - #{$height-iOS});
+    }
+    ::v-deep .sf-image {
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .images-grid {
+    &__row {
+      display: flex;
+      & + & {
+        margin-top: $spacer-big / 2;
+        @include for-desktop {
+          margin-top: $spacer-big;
+        }
+      }
+    }
+    &__col {
+      margin: 0;
+      & + & {
+        margin-left: $spacer-big / 2;
+        @include for-desktop {
+          margin-left: $spacer-big;
+        }
+      }
+    }
+  }
+  .product {
+    @include for-desktop {
+      display: flex;
+    }
+    &__gallery,
+    &__description {
+      flex: 1;
+    }
+    &__description {
+      padding: 0 $spacer-big;
+      @include for-desktop {
+        margin-left: $spacer-big * 5;
+      }
+    }
+  }
+  .product-card {
+    max-width: unset; // ?
+    &:hover {
+      @include for-desktop {
+        box-shadow: 0px 4px 20px rgba(168, 172, 176, 0.19);
+      }
+    }
+  }
+  .product-carousel {
+    margin: -20px -#{$spacer-big} -20px 0;
+    @include for-desktop {
+      margin: -20px 0;
+    }
+    ::v-deep .sf-carousel__wrapper {
+      padding: 20px 0;
+      @include for-desktop {
+        padding: 20px;
+        max-width: calc(100% - 216px);
+      }
+    }
+  }
+  .product-details {
+    &__action {
+      display: flex;
+      margin: $spacer-big 0 ($spacer-big / 2);
+      @include for-desktop {
+        justify-content: flex-end;
+      }
+    }
+    &__add-to-cart {
+      margin-top: 1.5rem;
+      @include for-desktop {
+        margin-top: $spacer-extra-big;
+      }
+    }
+    &__alert {
+      margin-top: 1.5rem;
+    }
+    &__attribute {
+      margin-bottom: $spacer-big;
+    }
+    &__description {
+      margin: $spacer-extra-big 0 ($spacer-big * 3) 0;
+      font-family: $body-font-family-secondary;
+      font-size: $font-size-regular-mobile;
+      line-height: 1.6;
+      @include for-desktop {
+        font-size: $font-size-regular-desktop;
+      }
+    }
+    &__divider {
+      margin-top: 30px;
+    }
+    &__heading {
+      margin-top: $spacer-big;
+      ::v-deep .sf-heading__title {
+        font-size: $font-size-big-mobile;
+        font-weight: $body-font-weight-primary;
+        @include for-desktop {
+          font-size: $h1-font-size-desktop;
+          font-weight: $body-font-weight-secondary;
+        }
+      }
+      @include for-desktop {
+        margin-top: 0;
+      }
+    }
+    &__mobile-bar {
+      display: none;
+      padding: $spacer-medium 0;
+      box-sizing: border-box;
+      .product--is-active & {
+        display: block;
+        @include for-desktop {
+          display: none;
+        }
+      }
+      @include for-desktop {
+        display: none;
+      }
+    }
+    &__mobile-top {
+      display: flex;
+      align-items: center;
+      @include for-desktop {
+        display: block;
+      }
+    }
+    &__properties {
+      margin-top: $spacer-big;
+    }
+    &__sub {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    &__sub-price {
+      flex-basis: 100%;
+      margin-top: $spacer-big / 4;
+      @include for-desktop {
+        flex-basis: auto;
+        margin-top: $spacer-big / 2;
+      }
+    }
+    &__sub-rating {
+      display: flex;
+      margin-top: $spacer-big / 2;
+      @include for-desktop {
+        margin-left: auto;
+      }
+    }
+    &__sub-reviews {
+      margin-left: 10px;
+      font-size: 0.75rem;
+    }
+    &__section {
+      border-bottom: 1px solid #f1f2f3;
+      padding-bottom: 10px;
+      @include for-desktop {
+        border: 0;
+        padding-bottom: 0;
+      }
+    }
+    &__tabs {
+      margin-top: $spacer-big;
+      @include for-desktop {
+        margin-top: 5 * $spacer-big;
+      }
+      p {
+        margin: 0;
+      }
+    }
+    &__review {
+      padding-bottom: $spacer-big;
+      @include for-desktop {
+        padding-bottom: $spacer-extra-big;
+        border-bottom: 1px solid $c-light;
+      }
+      & + & {
+        padding-top: $spacer-extra-big;
+        border-top: 1px solid $c-light;
+        @include for-desktop {
+          border-top: 0;
+          padding-top: $spacer-extra-big;
+        }
+      }
+    }
+  }
+  .product-property {
+    padding: $spacer-small 0;
+  }
+  .section {
+    padding-left: $spacer-big;
+    padding-right: $spacer-big;
+    @include for-desktop {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+  /* SfAction or SfButton modifier */
+  .sf-action {
+    padding: 0;
+    border: 0;
+    outline: none;
+    background-color: transparent;
+    color: $c-text;
+    font-family: $body-font-family-secondary;
+    font-size: $font-size-regular-mobile;
+    font-weight: $body-font-weight-secondary;
+    line-height: 1.6;
+    text-decoration: underline;
+    cursor: pointer;
+    @include for-desktop {
+      font-size: $font-size-regular-desktop;
+    }
   }
 </style>
