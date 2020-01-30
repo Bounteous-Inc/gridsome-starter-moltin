@@ -1,23 +1,34 @@
 <template>
   <Layout>
-    <h1>{{ $page.moltinBrand.name }}</h1>
+    <SfSection
+      :title-heading="$page.brand.name"
+      class="section"
+    />
 
-    <p>{{ $page.moltinBrand.description }}</p>
-
-    <ul>
-      <li
-        v-for="product in $page.moltinBrand.products"
-        :key="product.id"
-      >
-        <a :href="product.path">{{ product.name }}</a>
-      </li>
-    </ul>
+    <div class="main section">
+      <div class="products">
+        <div class="products__list">
+          <SfProductCard
+            v-for="product in $page.brand.products"
+            :key="product.id"
+            :title="product.name"
+            :regular-price="formatPrice(product.price[0].amount)"
+            :link="product.path"
+            link-type="g-link"
+            class="products__product-card"
+          >
+            <template #image>
+              <g-image :src="product.main_image.image" />
+            </template>
+          </SfProductCard>
+        </div>
+      </div>
+    </div>
   </Layout>
 </template>
-
 <page-query>
   query($id: ID!) {
-    moltinBrand(id: $id) {
+    brand: moltinBrand(id: $id) {
       id
       type
       name
@@ -31,18 +42,83 @@
         name
         slug
         path
+        price {
+          amount
+        }
+        main_image {
+          id
+          type
+          image(width: 216, height: 326, fit: contain, background: "white")
+          file_name
+          mime_type
+          created_at
+        }
       }
     }
   }
 </page-query>
 
 <script>
+  import {
+    SfSection,
+    SfProductCard,
+  } from '@storefront-ui/vue';
+
+  import formatPrice from '~/lib/format-price';
+
   export default {
-    metaInfo: {
-      title: 'Brand',
+    components: {
+      SfSection,
+      SfProductCard,
+    },
+    methods: {
+      formatPrice,
     },
   };
 </script>
 
-<style>
+<style lang="scss" scoped>
+  @import "~@storefront-ui/vue/styles";
+  @mixin for-desktop {
+    @media screen and (min-width: $desktop-min) {
+      @content;
+    }
+  }
+  .products {
+    box-sizing: border-box;
+    flex: 1;
+    margin: 0 -#{$spacer};
+    @include for-desktop {
+      margin: $spacer-big;
+    }
+    &__list {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 1.875rem - 0.5rem;
+    }
+    &__product-card {
+      flex: 0 0 50%;
+      padding: $spacer;
+      @include for-desktop {
+        flex: 0 0 25%;
+        padding: $spacer-big;
+      }
+    }
+    &__pagination {
+      @include for-desktop {
+        display: flex;
+        justify-content: center;
+        margin-top: $spacer-extra-big;
+      }
+    }
+  }
+  .section {
+    padding-left: $spacer-big;
+    padding-right: $spacer-big;
+    @include for-desktop {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
 </style>

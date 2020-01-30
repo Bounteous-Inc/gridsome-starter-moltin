@@ -20,6 +20,7 @@
       >
         <g-link
           :to="nav.path"
+          @click="hovered = null"
         >
           {{ nav.name }}
         </g-link>
