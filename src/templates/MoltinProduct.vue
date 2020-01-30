@@ -40,8 +40,18 @@
             </p>
             <div class="product-details__section">
               <SfAddToCart
+                :key="$page.product.id"
                 class="product-details__add-to-cart"
-              />
+              >
+                <template #add-to-cart-btn>
+                  <span
+                    class="moltin-buy-button sf-add-to-cart__button sf-button sf-shopkit-button"
+                    :data-moltin-product-id="$page.product.id"
+                    data-moltin-open-cart="true"
+                    data-moltin-text="Add to Basket"
+                  />
+                </template>
+              </SfAddToCart>
             </div>
             <div class="product-details__description">
               <SfProperty
