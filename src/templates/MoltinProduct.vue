@@ -48,7 +48,7 @@
                     class="moltin-buy-button sf-add-to-cart__button sf-button sf-shopkit-button"
                     :data-moltin-product-id="$page.product.id"
                     data-moltin-open-cart="true"
-                    data-moltin-text="Add to Basket"
+                    data-moltin-text="Add to Cart"
                   />
                 </template>
               </SfAddToCart>
@@ -83,10 +83,21 @@
               :regular-price="formatPrice(product.price[0].amount)"
               :link="product.path"
               link-type="g-link"
+              wishlist-icon="false"
               class="product-card"
+              :show-add-to-cart-button="true"
             >
               <template #image>
                 <g-image :src="product.main_image.image" />
+              </template>
+              <template #add-to-cart>
+                <span
+                  class="moltin-buy-button sf-add-to-cart__button sf-button sf-shopkit-button"
+                  :data-moltin-product-id="product.id"
+                  data-moltin-open-cart="true"
+                  data-moltin-text="Add to Cart"
+                  @click.prevent
+                />
               </template>
             </SfProductCard>
           </SfCarouselItem>
@@ -108,10 +119,21 @@
               :regular-price="formatPrice(product.price[0].amount)"
               :link="product.path"
               link-type="g-link"
+              wishlist-icon="false"
               class="product-card"
+              :show-add-to-cart-button="true"
             >
               <template #image>
                 <g-image :src="product.main_image.image" />
+              </template>
+              <template #add-to-cart>
+                <span
+                  class="moltin-buy-button sf-add-to-cart__button sf-button sf-shopkit-button"
+                  :data-moltin-product-id="product.id"
+                  data-moltin-open-cart="true"
+                  data-moltin-text="Add to Cart"
+                  @click.prevent
+                />
               </template>
             </SfProductCard>
           </SfCarouselItem>
@@ -166,6 +188,7 @@
                   image(
                     width: 216
                     height: 326
+                    quality: 90
                     fit: contain
                     background: "white"
                   )
