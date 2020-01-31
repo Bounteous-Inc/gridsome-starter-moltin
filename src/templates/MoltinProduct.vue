@@ -227,6 +227,7 @@
                     width: 216
                     height: 326
                     fit: contain
+                    quality: 90
                     background: "white"
                   )
                   file_name

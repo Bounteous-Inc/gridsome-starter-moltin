@@ -57,7 +57,13 @@
         main_image {
           id
           type
-          image(width: 216, height: 326, fit: contain, background: "white")
+          image(
+            width: 216
+            height: 326
+            quality: 90
+            fit: contain
+            background: "white"
+          )
           file_name
           mime_type
           created_at
