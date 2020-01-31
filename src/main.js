@@ -6,7 +6,14 @@ import 'typeface-montserrat';
 
 import DefaultLayout from '~/layouts/Default.vue';
 
-export default function (Vue /* , { router, head, isClient } */) {
+export default function (Vue, { head }) {
   // Set default layout as a global component
   Vue.component('Layout', DefaultLayout);
+
+  head.script.push({
+    body: true,
+    src: '/vendor/moltin/shopkit.js',
+    'data-moltin-client-id': process.env.GRIDSOME_MOLTIN_CLIENT_ID,
+    'data-moltin-stripe-publishable-key': process.env.GRIDSOME_STRIPE_PUBLISHABLE_KEY,
+  });
 }

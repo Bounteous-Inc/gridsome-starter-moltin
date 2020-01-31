@@ -56,4 +56,33 @@
   a {
     color: $c-text-link;
   }
+
+  .shopkit-primary {
+    background: $c-primary !important;
+    font: unset !important;
+    font-family: $body-font-family-primary !important;
+  }
+  .shopkit-primary-text {
+    color: unset !important;
+    font: unset !important;
+    font-family: $body-font-family-primary !important;
+  }
+  .shopkit-modal {
+    color: unset !important;
+    font: unset !important;
+    font-family: $body-font-family-primary !important;
+  }
+
+  .sf-shopkit-button {
+    padding: 0;
+    display: flex;
+
+    & > .shopkit-button {
+      background-color: unset !important;
+      border: none !important;
+      flex: 1 0 100% !important;
+      font: unset !important;
+    }
+  }
+
 </style>

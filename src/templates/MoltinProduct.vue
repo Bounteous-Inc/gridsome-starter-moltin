@@ -40,8 +40,18 @@
             </p>
             <div class="product-details__section">
               <SfAddToCart
+                :key="$page.product.id"
                 class="product-details__add-to-cart"
-              />
+              >
+                <template #add-to-cart-btn>
+                  <span
+                    class="moltin-buy-button sf-add-to-cart__button sf-button sf-shopkit-button"
+                    :data-moltin-product-id="$page.product.id"
+                    data-moltin-open-cart="true"
+                    data-moltin-text="Add to Cart"
+                  />
+                </template>
+              </SfAddToCart>
             </div>
             <div class="product-details__description">
               <SfProperty
@@ -73,10 +83,21 @@
               :regular-price="formatPrice(product.price[0].amount)"
               :link="product.path"
               link-type="g-link"
+              wishlist-icon="false"
               class="product-card"
+              :show-add-to-cart-button="true"
             >
               <template #image>
                 <g-image :src="product.main_image.image" />
+              </template>
+              <template #add-to-cart>
+                <span
+                  class="moltin-buy-button sf-add-to-cart__button sf-button sf-shopkit-button"
+                  :data-moltin-product-id="product.id"
+                  data-moltin-open-cart="true"
+                  data-moltin-text="Add to Cart"
+                  @click.prevent
+                />
               </template>
             </SfProductCard>
           </SfCarouselItem>
@@ -98,10 +119,21 @@
               :regular-price="formatPrice(product.price[0].amount)"
               :link="product.path"
               link-type="g-link"
+              wishlist-icon="false"
               class="product-card"
+              :show-add-to-cart-button="true"
             >
               <template #image>
                 <g-image :src="product.main_image.image" />
+              </template>
+              <template #add-to-cart>
+                <span
+                  class="moltin-buy-button sf-add-to-cart__button sf-button sf-shopkit-button"
+                  :data-moltin-product-id="product.id"
+                  data-moltin-open-cart="true"
+                  data-moltin-text="Add to Cart"
+                  @click.prevent
+                />
               </template>
             </SfProductCard>
           </SfCarouselItem>
@@ -156,6 +188,7 @@
                   image(
                     width: 216
                     height: 326
+                    quality: 90
                     fit: contain
                     background: "white"
                   )
@@ -194,6 +227,7 @@
                     width: 216
                     height: 326
                     fit: contain
+                    quality: 90
                     background: "white"
                   )
                   file_name

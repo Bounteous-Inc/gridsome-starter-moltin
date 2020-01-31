@@ -31,6 +31,12 @@
         />
       </SfHeaderNavigationItem>
     </template>
+    <template #header-icons>
+      <span
+        v-once
+        class="moltin-cart-button sf-button sf-shopkit-button"
+      />
+    </template>
   </SfHeader>
 </template>
 
@@ -86,6 +92,7 @@
 
 <script>
   import {
+    // SfCircleIcon,
     SfHeader,
   } from '@storefront-ui/vue';
 
@@ -93,6 +100,7 @@
 
   export default {
     components: {
+      // SfCircleIcon,
       SfHeader,
       MegaMenu,
     },

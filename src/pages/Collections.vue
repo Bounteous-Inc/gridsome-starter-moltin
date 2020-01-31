@@ -17,9 +17,18 @@
             :link="product.path"
             link-type="g-link"
             class="product-card"
+            :show-add-to-cart-button="true"
           >
             <template #image>
               <g-image :src="product.main_image.image" />
+            </template>
+            <template #add-to-cart>
+              <span
+                class="moltin-buy-button sf-add-to-cart__button sf-button sf-shopkit-button"
+                :data-moltin-product-id="product.id"
+                data-moltin-text="Add to Cart"
+                @click.prevent
+              />
             </template>
           </SfProductCard>
         </SfCarouselItem>
@@ -46,7 +55,13 @@
             main_image {
               id
               type
-              image(width: 216, height: 326, fit: contain, background: "white")
+              image(
+                width: 216
+                height: 326
+                quality: 90
+                fit: contain
+                background: "white"
+              )
               file_name
               mime_type
               created_at
