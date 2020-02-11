@@ -12,7 +12,7 @@ export default function (Vue, { head }) {
 
   head.script.push({
     body: true,
-    src: '/vendor/moltin/shopkit.js',
+    src: '//unpkg.com/@bounteous/shopkit@0.0.1/dist/index.js',
     'data-moltin-client-id': process.env.GRIDSOME_MOLTIN_CLIENT_ID,
     'data-moltin-stripe-publishable-key': process.env.GRIDSOME_STRIPE_PUBLISHABLE_KEY,
   });
