@@ -2,9 +2,9 @@
 
 # Elastic Path Moltin Starter for Gridsome
 
-This is Gridsome starter, demonstrating how easy it is to spin up a blazing fast e-commerce site with Moltin's APIs. [View Demo](https://gridsome-moltin-starter.netlify.com)
+Gridsome starter demonstrating how easy it is to spin up a blazing fast e-commerce site with Moltin's APIs. [View Demo](https://gridsome-moltin-starter.netlify.com)
 
-This starter uses the Gridsome Moltin Source plugin ([`gridsome-source-moltin`](https://bitbucket.org/hs2studio/gridsome-source-moltin/)) to pull data from your Moltin store, and load it into Gridsome's data store - which you can then query to generate pages.
+This starter uses the Gridsome Moltin Source plugin ([`gridsome-source-moltin`](https://github.com/Bounteous-Inc/gridsome-source-plugin)) to pull data from your Moltin store, and load it into Gridsome's data store - which you can then query to generate pages.
 
 ## Moltin Setup
 
