@@ -4,20 +4,64 @@
 
 Gridsome starter demonstrating how easy it is to spin up a blazing fast e-commerce site with Moltin's APIs. [View Demo](https://gridsome-moltin-starter.netlify.com)
 
-This starter uses the Gridsome Moltin Source plugin ([`gridsome-source-moltin`](https://github.com/Bounteous-Inc/gridsome-source-plugin)) to pull data from your Moltin store, and load it into Gridsome's data store - which you can then query to generate pages.
+This starter uses the Gridsome Moltin Source plugin ([`@bounteous/gridsome-source-moltin`](https://github.com/Bounteous-Inc/gridsome-source-plugin)) to pull data from your Moltin store, and load it into Gridsome's data store - which you can then query to generate pages.
 
-## Moltin Setup
+It also demonstrates integration of the following components:
 
-TODO
+* [Shopkit](https://www.moltin.com/commerce-solutions/embeddable-cart)
+  * Moltin's Embeddable Cart & Checkout
+  * Currently using [a fork](https://github.com/Bounteous-Inc/shopkit) of the project.
+* [Storefront UI](https://www.storefrontui.io)
+  * Vue.js component library specifically for eCommerce.
+* [Algolia Gridsome Plugin](https://gridsome.org/plugins/gridsome-plugin-algolia)
+  * Index your products at deploy time, so that it reflects your URL structure and is never out of sync with what your visitors can see.
+  * This is optional, will only run if:
+    * the appropriate Algolia credentials are in the `.env` file; and
+    * during production builds (so usually only during deploys, not while running `npm run develop`)
+
+## Account Setup
+
+1. [Sign up](https://dashboard.moltin.com/signup) for a Moltin account.
+2. Import sample products into your catalogue by either:
+   * Cloning [moltin-transfer-catalog-data](https://github.com/moltin/moltin-transfer-catalog-data) and running it locally.
+   * Using the [hosted version](https://transfer-catalog-data.herokuapp.com/).
+3. Take note of your Moltin [Client ID](https://dashboard.moltin.com/app)
+4. Optional:
+   * Sign up for an Algolia account and take note of your App ID and Admin Key.
+   * Sign up for a Stripe account and take note of your Publishable Key (can be a test key).
 
 ## Installation
 
-TODO
+```bash
+npm install -g @gridsome/cli
 
-## Create Project
+gridsome create my-gridsome-moltin-store bounteous/gridsome-starter-moltin
+```
 
-TODO
+## Setup Credentials
+
+Set up your `.env` file by running:
+
+```bash
+npm run env
+```
+
+The script will prompt you for the values of each variable. Only the Moltin Client ID is required.
+
+## Develop
+
+```bash
+npm run develop
+```
 
 ## License
 
 This project is licensed under the MIT License. See LICENSE for details.
+
+## Who we are
+
+> Bounteous creates big-picture digital solutions that help leading companies deliver transformational brand experiences.
+
+Founded in 2003 in Chicago, Bounteous creates big-picture digital solutions that help leading companies deliver transformational brand experiences. Our expertise includes Strategy, Experience Design, Technology, Analytics and Insight, and Marketing. Bounteous forms problem-solving partnerships with our clients to envision, design, and build their digital futures.
+
+[We're hiring!](https://www.bounteous.com/careers/) And we are the commerce and front end experts you've been looking for. [Meet us](https://www.bounteous.com/).
