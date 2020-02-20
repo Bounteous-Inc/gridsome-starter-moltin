@@ -5,7 +5,7 @@ query {
         id
         sku
         slug
-        # path
+        path
         name
         description
         commodity_type

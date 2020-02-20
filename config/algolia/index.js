@@ -26,6 +26,7 @@ module.exports = {
         matchFields: [
           'slug',
           'updated_at',
+          'path',
         ],
       },
     ],
