@@ -26,7 +26,7 @@
     "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-vue": "^6.1.2",
     "gridsome-plugin-algolia": "^2.1.3",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "sass-loader": "^8.0.2",
     "vue-eslint-parser": "^7.0.0",
     "webpack-merge": "^4.2.2"
